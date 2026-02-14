@@ -15,93 +15,104 @@ function getComputerChoice()
 
 }
 
+const ROCK = document.querySelector("button#rock");
+const PAPER = document.querySelector("button#paper");
+const SCISSORS = document.querySelector("button#scissors");
 
-function getHumanChoice()
+ROCK.addEventListener("click", event =>
 {
-    let humanChoice = `${prompt("choose: 'rock' OR 'paper' OR 'scissors'")}`;
-    humanChoice;
+    playRound(event.target.textContent);
+});
 
-}
-
-
-function playGame()
+PAPER.addEventListener("click", event =>
 {
-    let humanScore = 0;
-    let ComputerScore = 0;
+    playRound(event.target.textContent);
+});
 
-    function playRound(humanChoice, computerChoice)
+SCISSORS.addEventListener("click", event =>
+{
+    playRound(event.target.textContent);
+});
+
+// PAPER.addEventListener("click", playRound(event.textContent, getComputerChoice()));
+// SCISSORS.addEventListener("click", playRound(event.textContent, getComputerChoice()));
+
+let humanScore = 0;
+let ComputerScore = 0;
+
+const RESULT = document.querySelector("div");
+
+function playRound(humanChoice, computerChoice = getComputerChoice())
+{
+    if (humanChoice === "paper")
     {
-        if (humanChoice === "paper")
+        if (computerChoice === "paper")
         {
-            if (computerChoice === "paper")
-            {
-                console.log("Try again!🥶");
+            console.log("Try again!🥶");
 
-            } else if (computerChoice === "rock")
-            {
-                humanScore += 1;
-                console.log("You win Paper defeats Rock.");
-
-            } else 
-            {
-                ComputerScore += 1;
-                console.log("You lose Rock defeats Scissors.");
-
-            }
-
-        } else if (humanChoice === "scissors")
+        } else if (computerChoice === "rock")
         {
-            if (computerChoice === "scissors")
-            {
-                console.log("Try again!🥶");
+            humanScore += 1;
+            console.log("You win Paper defeats Rock.");
 
-            } else if (computerChoice === "paper") {
-                humanScore += 1;
-                console.log("You win Scissors defeats Paper.");
-            } else 
-            {
-                ComputerScore += 1;
-                console.log("You lose Rock defeats Scissors.");
-
-            }
-
-        } else
+        } else 
         {
-            if (computerChoice === "rock") {
-                console.log("Try again!🥶");
-            
-            } else if (computerChoice === "scissors") {
-                humanScore += 1;
-                console.log("You win Rock defeats Scissors.")
-
-            } else
-            {
-                ComputerScore += 1;
-                console.log("You lose Paper defeats Rock.")
-
-            }
+            ComputerScore += 1;
+            console.log("You lose Rock defeats Scissors.");
 
         }
 
+    } else if (humanChoice === "scissors")
+    {
+        if (computerChoice === "scissors")
+        {
+            console.log("Try again!🥶");
+
+        } else if (computerChoice === "paper")
+        {
+            humanScore += 1;
+            console.log("You win Scissors defeats Paper.");
+
+        } else 
+        {
+            ComputerScore += 1;
+            console.log("You lose Rock defeats Scissors.");
+
+        }
+
+    } else
+    {
+        if (computerChoice === "rock")
+        {
+            console.log("Try again!🥶");
+
+        } else if (computerChoice === "scissors")
+        {
+            humanScore += 1;
+            console.log("You win Rock defeats Scissors.")
+
+        } else
+        {
+            ComputerScore += 1;
+            console.log("You lose Paper defeats Rock.")
+
+        }
     }
 
-    for (let round = 0; round < 5; round++)
+    RESULT.textContent = `
+    Your score is: ${humanScore}\n
+    Computer score is: ${ComputerScore}`;
+
+    if (humanScore === 5)
     {
-        playRound(getHumanChoice(), getComputerChoice());
+        alert("Congrats you're the winner! 🥳🎉🎉🎉");
+        humanScore = 0;
+        ComputerScore = 0;
 
-    }
-
-    // Log the winner!
-    if (humanScore > ComputerScore)
+    } else if (ComputerScore === 5) 
     {
-        window.alert(`You win.\nYour scores: '${humanScore}'\nComputer scores: '${ComputerScore}'`)
-
-    } else 
-    {
-        window.alert(`You lose.\nYour scores: '${humanScore}'\nComputer scores: '${ComputerScore}'`)
-
-    }
-
+        alert("Computer is the winner! 🖥️🎉🎉🎉");
+        humanScore = 0;
+        ComputerScore = 0;
+    };
 }
-
-playGame();
